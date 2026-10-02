@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café & Historia</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background-color: #f7f1e8;
+            color: #3b2417;
+            line-height: 1.6;
+        }
+
+        /* Encabezado */
+        header {
+            min-height: 70vh;
+            background:
+                linear-gradient(rgba(40, 22, 12, 0.65), rgba(40, 22, 12, 0.65)),
+                url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80")
+                center/cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #d6a56d;
+        }
+
+        .hero {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 13px 28px;
+            background: #b8793d;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #d49a5c;
+            transform: translateY(-2px);
+        }
+
+        /* Secciones */
+        section {
+            padding: 80px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 2.6rem;
+            color: #4a2b1b;
+        }
+
+        .section-title p {
+            color: #765846;
+            margin-top: 10px;
+        }
+
+        /* Tarjetas de café */
+        .coffee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+        }
+
+        .coffee-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(60, 35, 20, 0.12);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .coffee-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(60, 35, 20, 0.2);
+        }
+
+        .coffee-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .coffee-info {
+            padding: 22px;
+        }
+
+        .coffee-info h3 {
+            color: #5a321d;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .coffee-info p {
+            color: #6d5545;
+        }
+
+        /* Historia */
+        .history {
+            background-color: #3e2619;
+            color: #f8eee2;
+        }
+
+        .history-container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .history .section-title h2 {
+            color: #fff;
+        }
+
+        .history .section-title p {
+            color: #dcc7b4;
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: #b8793d;
+        }
+
+        .timeline-item {
+            width: 50%;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            top: 28px;
+            width: 15px;
+            height: 15px;
+            background: #d49a5c;
+            border-radius: 50%;
+            border: 3px solid #3e2619;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -9px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -9px;
+        }
+
+        .timeline-item h3 {
+            color: #d6a56d;
+            margin-bottom: 8px;
+        }
+
+        /* Curiosidades */
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .fact {
+            text-align: center;
+            padding: 30px 20px;
+            background: #ead9c5;
+            border-radius: 15px;
+        }
+
+        .fact .icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .fact h3 {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background: #24150e;
+            color: #d9c5b2;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                width: 100%;
+                left: 0;
+                text-align: left;
+                padding-left: 40px;
+            }
+
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 3px;
+                right: auto;
+            }
+
+            section {
+                padding: 60px 6%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="inicio">
+        <nav>
+            <div class="logo">☕ Café & Historia</div>
+
+            <ul>
+                <li><a href="#cafes">Cafés</a></li>
+                <li><a href="#historia">Historia</a></li>
+                <li><a href="#curiosidades">Curiosidades</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero">
+            <div class="hero-content">
+                <h1>El mundo del café</h1>
+                <p>
+                    Descubre algunos de los cafés más populares del mundo
+                    y conoce la historia detrás de una de las bebidas más
+                    apreciadas de todos los tiempos.
+                </p>
+
+                <a href="#cafes" class="btn">Descubrir cafés</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Tipos de café -->
+        <section id="cafes">
+            <div class="section-title">
+                <h2>Tipos de café</h2>
+                <p>Una misma semilla puede convertirse en experiencias muy diferentes.</p>
+            </div>
+
+            <div class="coffee-grid">
+
+                <article class="coffee-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+                        alt="Café espresso"
+                    >
+                    <div class="coffee-info">
+                        <h3>Espresso</h3>
+                        <p>
+                            Café concentrado preparado al hacer pasar agua
+                            caliente a presión a través de café molido.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="coffee-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80"
+                        alt="Café latte"
+                    >
+                    <div class="coffee-info">
+                        <h3>Latte</h3>
+                        <p>
+                            Espresso combinado con abundante leche caliente
+                            y una fina capa de espuma.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="coffee-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?auto=format&fit=crop&w=800&q=80"
+                        alt="Cappuccino"
+                    >
+                    <div class="coffee-info">
+                        <h3>Cappuccino</h3>
+                        <p>
+                            Una mezcla equilibrada de espresso, leche caliente
+                            y espuma de leche.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="coffee-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80"
+                        alt="Café americano"
+                    >
+                    <div class="coffee-info">
+                        <h3>Americano</h3>
+                        <p>
+                            Espresso al que se añade agua caliente para obtener
+                            una bebida más ligera y de mayor volumen.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="coffee-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?auto=format&fit=crop&w=800&q=80"
+                        alt="Café mocha"
+                    >
+                    <div class="coffee-info">
+                        <h3>Mocha</h3>
+                        <p>
+                            Una combinación de espresso, leche y chocolate,
+                            normalmente acompañada de espuma.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="coffee-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1512568400610-62da28bc8a13?auto=format&fit=crop&w=800&q=80"
+                        alt="Cold brew"
+                    >
+                    <div class="coffee-info">
+                        <h3>Cold Brew</h3>
+                        <p>
+                            Café preparado mediante una extracción lenta con
+                            agua fría durante varias horas.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Historia -->
+        <section id="historia" class="history">
+            <div class="history-container">
+
+                <div class="section-title">
+                    <h2>Una breve historia del café</h2>
+                    <p>
+                        De las tierras de África a las cafeterías de todo el mundo.
+                    </p>
+                </div>
+
+                <div class="timeline">
+
+                    <div class="timeline-item">
+                        <h3>Siglo IX — Etiopía</h3>
+                        <p>
+                            La tradición sitúa los primeros usos del café en
+                            Etiopía. Desde allí, la planta comenzó a extenderse
+                            hacia otras regiones.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>Siglo XV — Yemen</h3>
+                        <p>
+                            El cultivo y consumo del café se desarrollaron en
+                            Yemen. El café comenzó a formar parte de la vida
+                            social y cultural de la región.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>Siglos XVI-XVII — Europa</h3>
+                        <p>
+                            El café llegó a Europa y las cafeterías comenzaron
+                            a convertirse en lugares de reunión, conversación
+                            e intercambio de ideas.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>Siglos XVIII-XIX — América</h3>
+                        <p>
+                            El cultivo del café se expandió por distintas zonas
+                            de América, convirtiéndose en un producto agrícola
+                            de gran importancia.
+                        </p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3>Actualidad</h3>
+                        <p>
+                            Hoy el café se consume en prácticamente todo el
+                            mundo y existe una enorme variedad de métodos de
+                            cultivo, tostado y preparación.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Curiosidades -->
+        <section id="curiosidades">
+
+            <div class="section-title">
+                <h2>Curiosidades</h2>
+                <p>Algunos datos interesantes sobre esta bebida.</p>
+            </div>
+
+            <div class="facts">
+
+                <div class="fact">
+                    <div class="icon">🌱</div>
+                    <h3>Una semilla</h3>
+                    <p>
+                        Los granos de café son las semillas que se encuentran
+                        dentro de los frutos del cafeto.
+                    </p>
+                </div>
+
+                <div class="fact">
+                    <div class="icon">🔥</div>
+                    <h3>El tostado importa</h3>
+                    <p>
+                        El grado de tostado influye considerablemente en el
+                        aroma, sabor y características de la bebida.
+                    </p>
+                </div>
+
+                <div class="fact">
+                    <div class="icon">🌎</div>
+                    <h3>De todo el mundo</h3>
+                    <p>
+                        El café se cultiva principalmente en regiones tropicales
+                        conocidas como el cinturón del café.
+                    </p>
+                </div>
+
+                <div class="fact">
+                    <div class="icon">☕</div>
+                    <h3>Muchas preparaciones</h3>
+                    <p>
+                        Espresso, filtrado, prensa francesa, moka, cold brew
+                        y muchas otras técnicas permiten preparar café.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>
+            <strong>☕ Café & Historia</strong>
+            · Una página dedicada al mundo del café.
+        </p>
+        <p>© 2026</p>
+    </footer>
+
+</body>
+</html>
